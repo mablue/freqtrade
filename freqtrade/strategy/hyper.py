@@ -170,6 +170,11 @@ class RealParameter(NumericParameter):
         Create skopt optimization space.
         :param name: A name of parameter field.
         """
+        if isinstance(self.default, list):
+            RealArrayParam=[]
+            for i in range(len(self.default)):
+                RealArrayParam.append(low=self.low, high=self.high, name=f'{name}-{i}', **self._space_params)
+            return RealArrayParam
         return Real(low=self.low, high=self.high, name=name, **self._space_params)
 
 
